@@ -10,8 +10,8 @@ services:
       SPRING_DATASOURCE_PASSWORD: 12345
       SPRING_DATASOURCE_USERNAME: root
       SPRING_PROFILES_ACTIVE: mysql   
-    ports:
-      - ":8083"
+    expose:
+      - "8083"
     networks:
       - net1
     depends_on:
@@ -28,41 +28,22 @@ services:
       - net1
     expose:
       - "3306"
-  pet:
+  nginx:
+    image: nginx
+    container_name: nginx
     build:
-       context: ./spring-petclinic
-       dockerfile: Dockerfile
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+    - "9000:80"
+    depends_on:
+      - petclinic
     networks:
       - net1
-      - net2
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://sql2:3306/db
-      SPRING_DATASOURCE_PASSWORD: 12345
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_PROFILES_ACTIVE: mysql
-    ports:
-      - "5000:8083"
-    depends_on:
-      - database
-  database:
-    image: mysql:latest
-    container_name: sql2
-    environment:
-      MYSQL_DATABASE: db
-      MYSQL_ROOT_PASSWORD: 12345
-    expose:
-      - "3306"
-    volumes:
-      - vol2:/var/lib/mysql
-    networks:
-      - net2    
-
 volumes:
   vol:
-  vol2:  
 networks:
   net1: 
-  net2:
 
 
 
