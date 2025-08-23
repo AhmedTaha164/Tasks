@@ -1,0 +1,26 @@
+services:
+  webapp:
+    environment:
+       SPRING_DATASOURCE_URL: jdbc:postgresql://prod:5432/prodDB
+       SPRING_DATASOURCE_USERNAME: root
+       SPRING_DATASOURCE_PASSWORD: 1234
+       SPRING_PROFILES_ACTIVE: postgres
+
+    depends_on:
+      - prodb
+  prodb:
+    image: postgres:15
+    container_name: prod
+    environment:
+       POSTGRS_DB: prodDB
+       POSTGRES_ROOT_PASSWORD: 1234
+    expose:
+      - "5432"
+    volumes:
+      - postgres_vol:/var/lib/postgresql/data
+    networks:
+      - net1
+volumes:
+  postgres_vol:
+networks:
+  net1:
