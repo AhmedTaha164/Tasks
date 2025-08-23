@@ -1,0 +1,25 @@
+services:
+  webapp:
+    environment:
+       SPRING_DATASOURCE_URL: jdbc:mysql://dev:3306/devDB
+       SPRING_DATASOURCE_USERNAME: root
+       SPRING_DATASOURCE_PASSWORD: 1234
+       SPRING_PROFILES_ACTIVE: mysql
+    depends_on:
+       - devdb
+  devdb:
+    image: mysql:8.0
+    container_name: dev
+    environment:
+       MYSQL_DATABASE: devDB
+       MYSQL_ROOT_PASSWORD: 1234
+    networks:
+       - net1
+    expose:
+       - "3306"
+    volumes:
+       - mysql_vol:/var/lib/mysql
+volumes:
+  mysql_vol:
+networks:
+  net1:
