@@ -1,0 +1,32 @@
+services:
+
+  webapp:
+    image: 192.168.118.131:8082/spring_petclinic:v1
+    container_name: pet_web
+    ports:
+      - "8083:8083"
+    depends_on:
+      - prometheus
+      - grafana
+    networks:
+      - net1
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - net1
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+    networks:
+      - net1
+networks:
+ net1:
