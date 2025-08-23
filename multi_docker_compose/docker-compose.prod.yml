@@ -13,7 +13,7 @@ services:
     container_name: prod
     environment:
        POSTGRS_DB: prodDB
-       POSTGRES_ROOT_PASSWORD: 1234
+       POSTGRES_PASSWORD: 1234
     expose:
       - "5432"
     volumes:
