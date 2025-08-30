@@ -7,8 +7,7 @@ This repository contains an Ansible playbook that automates the installation of 
 ## Table of Contents
 
 - [Requirements](#requirements)  
-- [Inventory](#inventory)  
-- [Usage](#usage)  
+- [Inventory](#inventory)    
 - [Playbook Structure](#playbook-structure)  
 - [Tasks Explained](#tasks-explained)  
 - [License](#license)  
@@ -144,3 +143,11 @@ Builds the spring-pet-image. Runs only if files changed for idempotency.
     ```
 
 Runs the container, maps host port 8080 to container port 8083, and sets restart_policy: always.
+
+- Run the playbook.yml
+  ```
+  ansible-playbook -i host.ini playbook.yml
+  ```
+- access the application on the browser
+  enter to your browser and go to `<host-ip>:<host port>`
+  <img width="1596" height="851" alt="image" src="https://github.com/user-attachments/assets/05171cb2-0c4f-4e39-865d-f8d53f9a8cd5" />
