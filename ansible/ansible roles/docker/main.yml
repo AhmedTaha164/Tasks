@@ -1,0 +1,31 @@
+- name: Install required packages
+  apt:
+    pkg:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+    state: latest
+    update_cache: true
+
+- name: Add Docker GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker repository
+  apt_repository:
+    repo: "deb https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+    state: present
+
+- name: Install Docker CE
+  apt:
+    name: docker-ce
+    state: latest
+    update_cache: true
+  notify: Restart Docker Service
+
+- name: Download Docker Compose binary
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/v2.27.1/docker-compose-{{ ansible_system | lower }}-{{ ansible_architecture }}"
+    dest: /usr/local/bin/docker-compose
+    mode: '0755'
