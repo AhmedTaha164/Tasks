@@ -1,0 +1,7 @@
+- name: Install docker-compose and deploy spring petclinic
+  hosts: all
+  become: true
+  roles: 
+    - docker
+    - petclinic
+    
