@@ -1,0 +1,17 @@
+- name: Ensure app directory exists
+  file:
+    path: /home/vagrant/docker-compose 
+    state: directory
+
+- name: Copy Docker Compose file
+  template:
+    src: docker-compose.yml.j2
+    dest: /home/vagrant/docker-compose/docker-compose.yml
+  register: compose_copy
+
+- name: Run Docker Compose
+  command: docker-compose up -d
+  args:
+    chdir: /home/vagrant/docker-compose
+  when: compose_copy.changed
+  
